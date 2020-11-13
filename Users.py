@@ -90,14 +90,13 @@ def change_group(Game, user_id, group_id, context: telegram.ext.CallbackContext)
     Game.conversation_handler.update_state(context.bot_data[group_id]['state_id'], tuple(key_conv))
 
 
-def remove_user(Game, user_id, group_id, context: telegram.ext.CallbackContext):
+def remove_user(Game, user_id, context: telegram.ext.CallbackContext):
     try:
         old_group = get_group_id(user_id, context)
         context.bot_data["all_groups"][old_group]['users'].remove(get_user(user_id, context))
     except Exception as e:
         print(e)
 
-    context.bot_data[group_id]['state_id'] = 2
     key_conv = list()
     key_conv.append(user_id)
     Game.conversation_handler.update_state(2, tuple(key_conv))
