@@ -18,9 +18,12 @@ bot = telegram.Bot(token=secrets["token"])
 
 
 def send_message(user_id: int, data: str, inline=False):
-    message = bot.send_message(chat_id=user_id, text=data)
-    if not inline:
-        bot.forwardMessage(chat_id=secrets['admin_chat'], from_chat_id=user_id, message_id=message.message_id)
+    try:
+        message = bot.send_message(chat_id=user_id, text=data)
+        if not inline:
+            bot.forwardMessage(chat_id=secrets['admin_chat'], from_chat_id=user_id, message_id=message.message_id)
+    except Exception as e:
+        print(e)
 
 
 class Levels:
